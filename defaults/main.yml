@@ -1,0 +1,9 @@
+# defaults file for jprofiler
+---
+jprofiler_version: 10.0.3
+jprofiler_install_prefix: /opt
+jprofiler_downloads_path: /tmp
+jprofiler_license_key: ''
+jprofiler_license_name: ''
+jprofiler_license_company: ''
+

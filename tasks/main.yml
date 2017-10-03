@@ -1,0 +1,26 @@
+# tasks file for jprofile
+---
+- name: Set location
+  set_fact:
+    jprofiler_download_url: "https://download-keycdn.ej-technologies.com/jprofiler/jprofiler_linux_{{ jprofiler_version | replace('.', '_') }}.sh"
+    jprofiler_install_script: "{{ jprofiler_downloads_path }}/jprofiler_linux_{{ jprofiler_version | replace('.', '_') }}.sh"
+    jprofiler_install_dir: "{{ jprofiler_install_prefix }}/jprofiler{{ jprofiler_version.split('.')[0] }}"
+
+- name: Download
+  get_url:
+    url: "{{ jprofiler_download_url }}"
+    dest: "{{ jprofiler_install_script }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install
+  script: "{{ jprofiler_install_script }}" -q -dir "{{ jprofiler_install_dir }}" {{ '-Vjprofiler.licenseKey="' + jprofiler_license_key + '"' if jprofiler_license_key != '' else '' }} {{ '-Vjprofiler.licenseName="' + jprofiler_license_name + '"' if jprofiler_license_name != '' else '' }} {{ '-Vjprofiler.licenseCompany="' + jprofiler_license_company + '"' if jprofiler_license_company != '' else '' }}
+  args:
+    creates: "{{ jprofiler_install_dir }}"
+
+- name: Create symlink
+  file: dest={{jprofiler_install_prefix}}/jprofiler src={{ jprofiler_install_dir }} state=link
+
+
+

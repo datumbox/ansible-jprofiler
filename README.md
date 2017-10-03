@@ -22,10 +22,10 @@ None
 #### Example Playbook
 
 ```yaml
----
 - hosts: all
   roles:
-    - jprofiler
+    - datumbox.jprofiler
+  become: yes
 ```
 
 #### License
